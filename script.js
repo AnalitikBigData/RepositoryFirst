@@ -1,3 +1,5 @@
+'use strict';
+// 2 lesson 
 let title = 'project', 
     screens = 'Простые, Сложные, Интерактивные', 
     screenPrice = 36739, 
@@ -19,3 +21,43 @@ console.log('процент отката посреднику за работу 
 alert("Hello");
 
 console.log('console works');
+
+// 3 lesson
+
+title = prompt('Как называется ваш проект?');
+//console.log(title);
+screens = prompt('Какие типы экранов нужно разработать?');
+//console.log(screens);
+screenPrice = +prompt('Сколько будет стоить данная работа?');
+//console.log(screenPrice);
+adaptive = Boolean(prompt('Нужен ли адаптив на сайте?'));
+//console.log(adaptive);
+
+let setvice1 = prompt('Какой дополнительный тип услуги нужен?');
+let servicePrice1 = +prompt('Сколько это будет стоить?');
+let setvice2 = prompt('Какой дополнительный тип услуги нужен?');
+let servicePrice2 = +prompt('Сколько это будет стоить?');
+
+fullPrice = screenPrice + servicePrice1 + servicePrice2;
+console.log(fullPrice);
+
+let servicePercentPrice = Math.ceil( fullPrice - fullPrice * (rollback/100) );
+console.log(servicePercentPrice);
+
+
+// проверка на скидку
+if(fullPrice >= 30000){
+    console.log('Даем скидку в 10%');
+}
+else if(fullPrice >= 15000 && fullPrice < 30000){
+    console.log('Даем скидку в 5%');
+}
+else if(fullPrice > 0 && fullPrice < 15000){
+    console.log('Скидка не предусмотрена');
+}
+else if(fullPrice <= 0){
+    console.log('Что то пошло не так');
+}
+else{
+    console.log('ошибка');
+}
