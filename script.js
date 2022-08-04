@@ -31,13 +31,15 @@ const getTitle = function(Title){
     if (!Title){
         return Title;
     }
-    if(Title[0] != ' '){
+    if(Title[0] !== ' '){
         return Title[0].toUpperCase() + Title.toLowerCase().slice(1);
     }
     else{
-        return Title[0] + (Title.toLowerCase()).slice(1);
+        let stringTemp = Title.trim();
+        return stringTemp[0].toUpperCase() + (stringTemp.toLowerCase()).slice(1);
     }
 }
+//console.log(getTitle(' jfkfkl GHkdlfl! kdld '));
 
 
 const getServicePercentPrices = function(priceFull){
