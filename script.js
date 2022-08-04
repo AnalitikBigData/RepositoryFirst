@@ -1,34 +1,23 @@
 'use strict';
 
-let title = 'project', 
-    screens = 'Простые, Сложные, Интерактивные', 
-    screenPrice = 36739, 
-    rollback = 10, 
-    fullPrice = 5699108621, 
-    adaptive = true;
-
-
-/*console.log(typeof(title));
-console.log(typeof(fullPrice));
-console.log(typeof(adaptive));
-console.log(screens.length);
-console.log('Стоимость верстки экранов ' + screenPrice + ' рублей/долларов/гривен/юани');
-console.log('Стоимость разработки сайта '+ fullPrice + ' рублей/долларов/гривен/юани');
-console.log( screens.toLowerCase().split(', '));
-console.log('процент отката посреднику за работу '+ ( fullPrice * (rollback/100) ));*/
-
-title = prompt('Как называется ваш проект?');
-screens = prompt('Какие типы экранов нужно разработать?');
-screenPrice = +prompt('Сколько будет стоить данная работа?');
-adaptive = confirm('Нужен ли адаптив на сайте?');
+let title = prompt('Как называется ваш проект?');
+let screens = prompt('Какие типы экранов нужно разработать?');
+let screenPrice = +prompt('Сколько будет стоить данная работа?');
+let adaptive = confirm('Нужен ли адаптив на сайте?');
+let rollback = 10;
+let allServicePrices;
+let fullPrice;
+let servicePercentPrice;
 let service1 = prompt('Какой дополнительный тип услуги нужен?');
 let servicePrice1 = +prompt('Сколько это будет стоить?');
 let service2 = prompt('Какой дополнительный тип услуги нужен?');
 let servicePrice2 = +prompt('Сколько это будет стоить?');
 fullPrice = screenPrice + servicePrice1 + servicePrice2;
-let servicePercentPrice = Math.ceil( fullPrice - fullPrice * (rollback/100) );
+//let servicePercentPrice = Math.ceil( fullPrice - fullPrice * (rollback/100) );
 
-
+const ShowTypeOf = function(variable){
+    return (variable + typeof(variable));
+}
 
 const getAllServicePrices = function(servPrice1, servPrice2){
     return servPrice1 + servPrice2;
@@ -72,8 +61,10 @@ const getRollbackMessage = function(priceFull){
 }
 
 
-let allServicePrices = getAllServicePrices(servicePrice1, servicePrice2);
+allServicePrices = getAllServicePrices(servicePrice1, servicePrice2);
 fullPrice = getFullPrice(screenPrice, servicePrice1, servicePrice2, getAllServicePrices);
+servicePercentPrice = getServicePercentPrices();
+title = getTitle();
 
 
 console.log('Тип title: ' + typeof(title));
