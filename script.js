@@ -28,14 +28,17 @@ function getFullPrice(priceScreen, servPrice1 ,servPrice2, callback){
 }
 
 const getTitle = function(Title){
+    if (!Title){
+        return Title;
+    }
     if(Title[0] != ' '){
-        return Title[0].toUpperCase() + (Title.toLowerCase()).slice(1);
+        return Title[0].toUpperCase() + Title.toLowerCase().slice(1);
     }
     else{
         return Title[0] + (Title.toLowerCase()).slice(1);
     }
 }
-//console.log(getTitle(' 1QaHsdf slsMNHFGpsmsmdk'));
+
 
 const getServicePercentPrices = function(priceFull){
     return Math.ceil( priceFull - priceFull * (rollback/100) );
@@ -64,7 +67,6 @@ const getRollbackMessage = function(priceFull){
 allServicePrices = getAllServicePrices(servicePrice1, servicePrice2);
 fullPrice = getFullPrice(screenPrice, servicePrice1, servicePrice2, getAllServicePrices);
 servicePercentPrice = getServicePercentPrices();
-title = getTitle();
 
 
 console.log('Тип title: ' + typeof(title));
