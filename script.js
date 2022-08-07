@@ -28,8 +28,8 @@ function getFullPrice(priceScreen, servPrice1 ,servPrice2, callback){
 }
 
 const getTitle = function(Title){
-    if (!Title){
-        return Title;
+    if (!Title.trim()){
+        return Title.trim();
     }
     if(Title[0] !== ' '){
         return Title[0].toUpperCase() + Title.toLowerCase().slice(1);
