@@ -10,7 +10,7 @@ const Number = function(num){
 
 do{
     screenPrice = +prompt('Сколько будет стоить данная работа?');
-} while(!Number(screenPrice));
+} while(!Number(screenPrice) || screenPrice <= 0);
 
 let adaptive = confirm('Нужен ли адаптив на сайте?');
 let rollback = 10;
@@ -25,14 +25,16 @@ const ShowTypeOf = function(variable){
 }
 
 const getAllServicePrices = function(){
+    let summa = 0;
     for(let i = 0; i < 2; i++){
         service = prompt('Какой дополнительный тип услуги нужен?');
-        servicePrice += +prompt('Сколько это будет стоить?');
+        servicePrice = +prompt('Сколько это будет стоить?');
         while(!Number(servicePrice)){
             servicePrice = +prompt('Сколько это будет стоить?');
         }
+        summa += servicePrice;
     }
-    return servicePrice;
+    return summa;
 }
 
 function getFullPrice(priceScreen, callback){
@@ -42,6 +44,9 @@ function getFullPrice(priceScreen, callback){
 const getTitle = function(Title){
     if (!Title){
         return Title;
+    }
+    if((Title.trim()).length === 0){
+        return Title.trim();
     }
     if(Title[0] !== ' '){
         return Title[0].toUpperCase() + Title.toLowerCase().slice(1);
