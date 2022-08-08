@@ -8,26 +8,26 @@ const Number = function(num){
 const getMessage = function(x){
     let y = 21;
     const func = function(){
-        if(confirm('Играем')===true){
+        if(confirm('Игра окончена')===false){
             if(x > 100){
-                x = +prompt('Введите число ещё раз');
+                //x = +prompt('Введите число ещё раз');
                 console.log('Загаданное число меньше');
-                x = +prompt('Введите число ещё раз');
+                x = +prompt('Загаданное число меньше. Введите число ещё раз');
                 func();
             }
             else if(x < 1){
                 console.log('Загаданное число больше');
-                x = +prompt('Введите число ещё раз');
+                x = +prompt('Загаданное число больше. Введите число ещё раз');
                 func();
             } else if(!Number(x)){
                 console.log('Введи число!'+  ' x = ' + x + ' '+ typeof(x));
-                x = +prompt('Введите число ещё раз');
+                x = +prompt('Введи число! Введите число ещё раз');
                 func();
             } 
 
             else if(x !== y ){
                 console.log('Неверно' +  ' x != ' + x + typeof(x));
-                x = +prompt('Введите число ещё раз');
+                x = +prompt('Неверно. Введите число ещё раз');
                 func();
             }
             else if(x === y){
@@ -35,6 +35,7 @@ const getMessage = function(x){
             }
         }
         else {
+            alert('Игра окончена');
             console.log('Игра окончена');
         }
     }
