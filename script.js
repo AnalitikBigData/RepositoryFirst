@@ -28,7 +28,10 @@ function getFullPrice(priceScreen, servPrice1 ,servPrice2, callback){
 }
 
 const getTitle = function(Title){
-    if (!Title.trim()){
+    if (!Title){
+        return Title;
+    }
+    if((Title.trim()).length === 0){
         return Title.trim();
     }
     if(Title[0] !== ' '){
