@@ -39,8 +39,8 @@ const appData = {
         }
         return summa;
     },
-    getFullPrice: function(callback){
-        return appData.screenPrice + callback();
+    getFullPrice: function(){
+        return appData.screenPrice + appData.allServicePrices;
     },
     getTitle : function(){
         if (!appData.title){
@@ -95,7 +95,7 @@ const appData = {
     start : function(){
         appData.asking();
         appData.allServicePrices = appData.getAllServicePrices();
-        appData.fullPrice = appData.getFullPrice(appData.getAllServicePrices);
+        appData.fullPrice = appData.getFullPrice();
         appData.servicePercentPrice = appData.getServicePercentPrices();
         appData.logger();
     } 
