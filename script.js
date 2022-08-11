@@ -18,11 +18,9 @@ const appData = {
     allServicePrices: 0, 
     fullPrice: 0,
     servicePercentPrice: 0,
-    service: [], 
+    service: {}, 
     servicePrice: 0,
-    ShowTypeOf: function(variable){
-        return (variable + typeof(variable));
-    },
+    
     asking : function(){
         appData.title = prompt('Как называется ваш проект?');
         while(!isString(appData.title)){
@@ -38,16 +36,21 @@ const appData = {
                 price = +prompt('Сколько будет стоить данная работа?');
             }
             appData.screens.push({id: i, name: name, price: price});
-            appData.screenPrice += price;
+            //appData.screenPrice += price;
+            
         }
+        appData.screenPrice += appData.screens.reduce(function(accumulator, currentValue) {
+            return accumulator + currentValue.price;
+        },appData.screenPrice);
         appData.adaptive = confirm('Нужен ли адаптив на сайте?');
 
     },
-    getAllServicePrices : function(){
-        let summa = 0;
+    aditionalServices : function(){
         let price = 0;
+        let name;
+        const array = [];
         for(let i = 0; i < 2; i++){
-            let name = prompt('Какой дополнительный тип услуги нужен?');
+            name = prompt('Какой дополнительный тип услуги нужен?');
             while(!isString(name)){
                 name = prompt('Какой дополнительный тип услуги нужен?');
             }
@@ -55,10 +58,17 @@ const appData = {
             while(!Number(price)){
                 price = +prompt('Сколько это будет стоить?');
             }
-            summa += price;
-            appData.service.push({id: i, name: name, price: price});
+            appData.allServicePrices += +price;
+            array.push({id: i, name: +price});
+            
         }
-        return summa;
+        return array;
+    },
+    getAllServicePrices : function(){
+        /*for(let key in appData.service){
+            appData.allServicePrices += appData.service[key];
+        }*/
+        return appData.allServicePrices;
     },
     getFullPrice: function(){
         return appData.screenPrice + appData.allServicePrices;
@@ -103,7 +113,7 @@ const appData = {
         console.log(appData.screens);
         console.log('Стоимость данной работы = ' + appData.screenPrice);
         console.log('Адаптив - ' + appData.adaptive);
-        console.log(appData.service);
+        //console.log(appData.aditionalServices());
         console.log('Стоимость ВСЕХ дополнительных услуг = ' + appData.allServicePrices);
         console.log('Стоимость разработки сайта '+ appData.fullPrice + ' рублей/долларов/гривен/юани');
         console.log('Процент разработчику = ' + appData.getServicePercentPrices());
@@ -112,6 +122,8 @@ const appData = {
     },
     start : function(){
         appData.asking();
+        console.log('Дополнительные услуги: ');
+        console.log(appData.aditionalServices());
         appData.allServicePrices = appData.getAllServicePrices();
         appData.fullPrice = appData.getFullPrice();
         appData.servicePercentPrice = appData.getServicePercentPrices();
