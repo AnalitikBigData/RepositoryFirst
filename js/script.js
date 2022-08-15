@@ -135,26 +135,28 @@ appData.start();
 const title = document.getElementsByTagName('h1')[0];
 const button = document.getElementsByClassName('handler_btn');
 const plus = document.querySelector('.screen-btn');
-const item = document.querySelectorAll('.other-items');
 const percent = document.querySelectorAll('.other-items.percent');
 const number = document.querySelectorAll('.other-items.number');
-const typeDoc = document.querySelector('div.main-controls__item.rollback input[type=range]');
-const span = document.querySelector('div.main-controls__item.rollback span[class=range-value]');
-const totalInput = document.getElementsByClassName('total-input');
+const typeDoc = document.querySelector('.rollback input[type=range]');
+const span = document.querySelector('.rollback span[class=range-value]');
+const totalInput1 = document.getElementsByClassName('total-input')[0];
+const totalInput2 = document.getElementsByClassName('total-input')[1];
+const totalInput3 = document.getElementsByClassName('total-input')[2];
+const totalInput4 = document.getElementsByClassName('total-input')[3];
+const totalInput5 = document.getElementsByClassName('total-input')[4];
 let screenHTML = document.querySelectorAll('.screen');
 
 
 console.log(title);
 console.log(button);
 console.log(plus);
-console.log(item);
 console.log(percent);
 console.log(number);
 console.log(typeDoc);
 console.log(span);
-
-for(let i in totalInput){
-    console.log(totalInput[i]);
-}
-
+console.log(totalInput1);
+console.log(totalInput2);
+console.log(totalInput3);
+console.log(totalInput4);
+console.log(totalInput5);
 console.log(screenHTML);
