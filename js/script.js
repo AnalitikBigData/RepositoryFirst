@@ -46,7 +46,6 @@ const appData = {
         buttonStart.addEventListener('click', appData.start);
         plus.addEventListener('click', appData.addScreenBlocks);
         range.addEventListener('input', appData.getRollback);
-        //buttonStart.addEventListener('click', appData.eventRange);
     },
     addTitle : function(){
         document.title = title.textContent;
@@ -107,6 +106,10 @@ const appData = {
             appData.servicePricesPercent += appData.screenPrice * (appData.servicesPercent[key] / 100) ;
         }
         appData.fullPrice = +appData.screenPrice + appData.servicePricesPercent + appData.servicePriceNumber;
+        appData.getServiceWithRollback();
+    },
+
+    getServiceWithRollback : function(){
         appData.serviceWithRollback = Math.ceil( appData.fullPrice - appData.fullPrice * (appData.rollback/100) );
     },
 
@@ -123,6 +126,8 @@ const appData = {
     getRollback : function(){
         span.textContent = range.value + '%';
         appData.rollback = +range.value;
+        appData.getServiceWithRollback();
+        totalInput5.value = appData.serviceWithRollback;
     },
 
     showResult : function(){
@@ -133,24 +138,6 @@ const appData = {
         totalInput5.value = appData.serviceWithRollback;
     },
 
-    /*eventRange : function(){
-        range.addEventListener('input', appData.getRollback);
-        appData.getRollback();
-        console.log('***' + totalInput5.value + ' ' +appData.rollback);
-        totalInput5.value = Math.ceil( appData.fullPrice - appData.fullPrice * (appData.rollback/100) );
-        console.log('+++' + totalInput5.value + ' ' +appData.rollback);
-    },*/
-
-    /*logger : function(){
-        console.log('Название проекта: ' + appData.getTitle());
-        console.log(appData.screens);
-        console.log('Стоимость данной работы = ' + appData.screenPrice);
-        console.log('Адаптив - ' + appData.adaptive);
-        //console.log(appData.aditionalServices());
-        console.log('Стоимость ВСЕХ дополнительных услуг = ' + appData.allServicePrices);
-        console.log('Стоимость разработки сайта '+ appData.fullPrice + ' рублей/долларов/гривен/юани');
-        console.log('Процент разработчику = ' + appData.getServicePercentPrices());
-    },*/
     start : function(){
         appData.addScreens();
         appData.addServices();
@@ -167,13 +154,6 @@ const appData = {
             appData.screens.splice(0, appData.screens.length);
         };
         appData.showResult();
-        
-        //appData.eventRange();
-        //buttonStart.addEventListener('click',appData.eventRange);
-        //buttonStart.addEventListener('click', appData.start);
-        //appData.showResult();
-        
-        //appData.logger();
         console.log(appData);
     },
 };
@@ -184,7 +164,7 @@ appData.init();
 //console.log(plus);
 //console.log(percent);
 //console.log(number);
-console.dir(range);
+//console.dir(range);
 //console.log(span);
 //console.log(totalInput1);
 //console.log(totalInput2);
