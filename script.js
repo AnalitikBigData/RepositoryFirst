@@ -1,7 +1,7 @@
 const listsBook = document.querySelectorAll('.book');
 const adv = document.querySelectorAll('.adv');
 const li = document.createElement('li');
-const changedTitle = listsBook[4].childNodes[1].innerHTML = 'Книга 3. this и Прототипы Объектов';
+const changedTitle = listsBook[4].childNodes[1].childNodes[1].textContent = 'Книга 3. this и Прототипы Объектов';
 const book2 = listsBook[0].childNodes;
 const book5 = listsBook[5].childNodes;
 const book6 = listsBook[2].childNodes;
@@ -36,9 +36,14 @@ book5[3].childNodes[13].before(book5[3].childNodes[16]);
 
 // добавление в 6 книгу 
 
-book6[3].childNodes[20].after(book6[3].append(li));
+book6[3].childNodes[17].after(book6[3].append(li));
 book6[3].childNodes[17].after(book6[3].childNodes[22]);
+book6[3].childNodes[19].remove();
 
 
 // изменение картинки
 document.body.style.backgroundImage = 'url("./image/you-dont-know-js.jpg")';
+
+
+console.dir(changedTitle);
+console.log(book6[3].childNodes);
