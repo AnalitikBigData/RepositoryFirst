@@ -95,18 +95,21 @@ const appData = {
     },
 
     addPrices : function(){
-        for(let screen of appData.screens){
-            appData.screenPrice += +screen.price;
-            appData.countScreens += +screen.count;
+        if(appData.ban() === 0){
+            for(let screen of appData.screens){
+                appData.screenPrice += +screen.price;
+                appData.countScreens += +screen.count;
+            }
+        
+            for(let key in appData.servicesNumber){
+                appData.servicePriceNumber += appData.servicesNumber[key];
+            }
+            for(let key in appData.servicesPercent){
+                appData.servicePricesPercent += appData.screenPrice * (appData.servicesPercent[key] / 100) ;
+            }
+            appData.fullPrice = +appData.screenPrice + appData.servicePricesPercent + appData.servicePriceNumber;
+            appData.getServiceWithRollback();
         }
-        for(let key in appData.servicesNumber){
-            appData.servicePriceNumber += appData.servicesNumber[key];
-        }
-        for(let key in appData.servicesPercent){
-            appData.servicePricesPercent += appData.screenPrice * (appData.servicesPercent[key] / 100) ;
-        }
-        appData.fullPrice = +appData.screenPrice + appData.servicePricesPercent + appData.servicePriceNumber;
-        appData.getServiceWithRollback();
     },
 
     getServiceWithRollback : function(){
@@ -120,6 +123,9 @@ const appData = {
                 counter++;
             }
         }
+        if(counter !== 0){
+            buttonStart.disabled = true;
+        }
         return counter;
     },
 
@@ -131,6 +137,7 @@ const appData = {
     },
 
     showResult : function(){
+        
         totalInput1.value = appData.screenPrice;
         totalInput2.value = appData.countScreens;
         totalInput3.value = appData.servicePricesPercent + appData.servicePriceNumber;
@@ -145,7 +152,6 @@ const appData = {
         appData.addPrices();
         if(appData.ban() === 0){
             buttonStart.disabled = true;
-            buttonStart.addEventListener('click', appData.start);
             console.log('!!!');
         }
         else{
