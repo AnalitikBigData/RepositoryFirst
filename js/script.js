@@ -24,6 +24,9 @@ const totalInput5 = document.getElementsByClassName('total-input')[4];
 let screenHTML = document.querySelectorAll('.screen');
 const inputScreens = document.querySelector('.main-controls__input');
 
+const cms = document.querySelector('.main-controls__views.cms');
+console.dir(cms);
+
 
 const appData = {
     title: '',
@@ -156,6 +159,17 @@ const appData = {
         buttonReset.style.display = 'block';
     },
 
+    getCMS : function(){
+        const cms = document.querySelector('.main-controls__views.cms');
+        console.dir(cms);
+        
+        const check = document.querySelector('cms-open');
+        const label = document.querySelector('.label.cms-open');
+        console.dir(check);
+        console.dir(label);
+        
+    },
+
     getRollback : function(){
         range.disabled = false;
         span.textContent = range.value + '%';
@@ -177,6 +191,7 @@ const appData = {
         appData.addServices();
         appData.getRollback();
         appData.addPrices();
+        appData.getCMS();
         if(appData.ban() === 0){
             buttonStart.disabled = true;
             console.log('!!!');
@@ -193,6 +208,15 @@ const appData = {
         console.log(appData);
     },
     deleteShowResult : function(){
+        appData.screenPrice = 0;
+        appData.rollback = 0;
+        appData.servicePricesPercent = 0;
+        appData.servicePriceNumber = 0;
+        appData.fullPrice = 0;
+        appData.servicePercentPrice = 0; 
+        appData.servicePrice = 0;
+        appData.serviceWithRollback = 0;
+        appData.countScreens = 0;
         totalInput1.value = 0;
         totalInput2.value = 0;
         totalInput3.value = 0;
@@ -225,6 +249,7 @@ const appData = {
         range.value = 0;
         span.textContent = 0 + '%';
         appData.rollback = 0;
+        appData.fullPrice = 0;
         appData.getServiceWithRollback();
         appData.deleteShowResult();
         totalInput5.value = 0;
