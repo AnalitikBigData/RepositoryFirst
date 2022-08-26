@@ -24,8 +24,12 @@ const totalInput5 = document.getElementsByClassName('total-input')[4];
 let screenHTML = document.querySelectorAll('.screen');
 const inputScreens = document.querySelector('.main-controls__input');
 
-const cms = document.querySelector('.main-controls__views.cms');
-console.dir(cms);
+//const cms = document.querySelector('.main-controls__views.cms');
+const checkCMS = document.querySelector('div.main-controls__views.cms input[type=checkbox]');
+let variantCMS = document.querySelector('.hidden-cms-variants');
+
+//const inputCMS = document.querySelectorAll('.main-controls__input')[8];
+const cmsSelect = document.querySelector('.hidden-cms-variants select');
 
 
 const appData = {
@@ -43,20 +47,25 @@ const appData = {
     servicePrice: 0,
     serviceWithRollback: 0,
     countScreens: 0,
+    cms : [],
+    percentCMS : 0,
 
-    init : function(){
+    init : function(){ // 
         this.addTitle();
         buttonStart.addEventListener('click', appData.start);
         buttonReset.addEventListener('click', appData.block);
         buttonReset.addEventListener('click', appData.reset);
         plus.addEventListener('click', appData.addScreenBlocks);
         range.addEventListener('input', appData.getRollback);
+        appData.CMS();
+        checkCMS.addEventListener('click', appData.addCMS);
+        cmsSelect.addEventListener('click', appData.workWithCMS);
     },
     addTitle : function(){
         document.title = title.textContent;
     },
 
-    addScreens : function(){
+    addScreens : function(){ // добавление экранов
         plus.disabled = false;
         screenHTML = document.querySelectorAll('.screen');
         screenHTML.forEach(function(screen, index){
@@ -116,6 +125,7 @@ const appData = {
                 this.servicePricesPercent += this.screenPrice * (this.servicesPercent[key] / 100) ;
             }
             this.fullPrice = +this.screenPrice + this.servicePricesPercent + this.servicePriceNumber;
+            appData.fullPrice = appData.fullPrice + appData.fullPrice * (appData.percentCMS / 100);
             appData.getServiceWithRollback();
         }
     },
@@ -124,7 +134,7 @@ const appData = {
         appData.serviceWithRollback = Math.ceil( appData.fullPrice - appData.fullPrice * (appData.rollback/100) );
     },
 
-    ban : function(){
+    ban : function(){ // забанить если экраны с недопустимыми значениями
         let counter = 0;
         for(let i = 0; i < this.screens.length; i++){
             if(this.screens[i].name === 'Тип экранов' || appData.screens[i].price===0){
@@ -136,7 +146,7 @@ const appData = {
         }
         return counter;
     },
-    block : function(){
+    block : function(){ // блокировка кнопок
         plus.disabled = true;
         screenHTML = document.querySelectorAll('.screen');
         screenHTML.forEach(function(screen){
@@ -153,21 +163,56 @@ const appData = {
         number.forEach(function(item){
             const check = item.querySelector('input[type=checkbox]');
             check.disabled = true;
-
         });
+        variantCMS.forEach(function(cms){
+            const select = cms.querySelector('select');
+            const input = cms.querySelector('input');
+            select.disabled = true;
+            input.disabled = true;
+        })
         buttonStart.style.display = 'none';
         buttonReset.style.display = 'block';
     },
+    CMS : function(){ // вызов всех функций  cms
+        appData.addCMS();
+        appData.workWithCMS();
+    },
 
-    getCMS : function(){
-        const cms = document.querySelector('.main-controls__views.cms');
-        console.dir(cms);
-        
-        const check = document.querySelector('cms-open');
-        const label = document.querySelector('.label.cms-open');
-        console.dir(check);
-        console.dir(label);
-        
+    addCMS : function(){ // добавлнение cms
+        if(checkCMS.checked === true){
+            variantCMS = document.querySelectorAll('.hidden-cms-variants');
+            variantCMS[0].style.display = 'flex';
+            variantCMS.forEach(function(option){
+                const select = option.querySelector('select');
+                select.disabled = false;
+                const input = option.querySelector('input');
+                const selectLabel = select.options[select.selectedIndex].label;
+                appData.cms.push(
+                    {
+                        option : selectLabel,
+                        value : +select.value,
+                    }
+                )
+            })
+        }
+        appData.workWithCMS();
+        console.log(appData.cms);
+    },
+
+    workWithCMS : function(){ // обработка массива и добавление значений
+        for(let i = 0; i < appData.cms.length; i++){
+            if(appData.cms[i].option === 'Другое'){
+                //console.log(appData.cms[i].option + ' ' + appData.cms[i].value);
+                const inputCMS = document.querySelectorAll('.main-controls__input')[8];
+                inputCMS.style.display = 'flex';
+                inputCMS.disabled = false;
+                //console.log(inputCMS.childNodes[1].value);
+                appData.percentCMS = +inputCMS.childNodes[1].value;
+            }
+            else if(appData.cms[i].option === 'WordPress'){
+                appData.percentCMS = appData.cms[i].value;
+            }
+        }
     },
 
     getRollback : function(){
@@ -190,24 +235,23 @@ const appData = {
         appData.addScreens();
         appData.addServices();
         appData.getRollback();
+        appData.CMS();
         appData.addPrices();
-        appData.getCMS();
         if(appData.ban() === 0){
             buttonStart.disabled = true;
             console.log('!!!');
             appData.showResult();
             appData.block();
-            //appData.reset();
         }
         else{
             buttonStart.disabled = false;
             console.log('---');
             appData.screens.splice(0, appData.screens.length);
         };
-        //appData.showResult();
         console.log(appData);
     },
-    deleteShowResult : function(){
+
+    deleteShowResult : function(){ // удаление 
         appData.screenPrice = 0;
         appData.rollback = 0;
         appData.servicePricesPercent = 0;
@@ -217,12 +261,14 @@ const appData = {
         appData.servicePrice = 0;
         appData.serviceWithRollback = 0;
         appData.countScreens = 0;
+        appData.percentCMS = 0;
         totalInput1.value = 0;
         totalInput2.value = 0;
         totalInput3.value = 0;
         totalInput4.value = 0;
         totalInput5.value = 0;
     },
+
     deleteScreens : function(){
         appData.screens.splice(0 , appData.screens.length);
         for(let i = 0; i < screenHTML.length - 1; i++){
@@ -233,6 +279,22 @@ const appData = {
         select.value = '';
         input.value = '';
     },
+
+    deleteCMS : function(){
+        appData.cms.splice(0 , appData.cms.length);
+        variantCMS.forEach(function(option){
+            const select = option.querySelector('select');
+            const input = option.querySelector('input');
+            select.value = '';
+            input.value = '';
+            
+        })
+        const inputCMS = document.querySelectorAll('.main-controls__input')[8];
+        inputCMS.style.display = 'none';
+        variantCMS[0].style.display = 'none';
+        checkCMS.checked = false;
+    },
+
     deleteService : function(){
         percent.forEach(function(item){
             const check = item.querySelector('input[type=checkbox]');
@@ -244,6 +306,7 @@ const appData = {
             check.checked = false;
         });
     },
+
     deleteRange : function(){
         range.disabled = true;
         range.value = 0;
@@ -254,7 +317,9 @@ const appData = {
         appData.deleteShowResult();
         totalInput5.value = 0;
     },
+
     reset : function(){
+        appData.deleteCMS();
         appData.deleteRange();
         appData.deleteScreens();
         appData.deleteService();
@@ -269,12 +334,7 @@ appData.init();
 
 //const element = document.querySelector('.main-controls__views');
 //console.dir(screenHTML);
-
-
-
-
 //buttonStart.style.display = 'none';
-
 
 //console.log(title);//
 //console.log(plus);
