@@ -59,7 +59,7 @@ const appData = {
         range.addEventListener('input', appData.getRollback);
         appData.CMS();
         checkCMS.addEventListener('click', appData.addCMS);
-        cmsSelect.addEventListener('click', appData.workWithCMS);
+        cmsSelect.addEventListener('change', appData.CMS);
     },
     addTitle : function(){
         document.title = title.textContent;
