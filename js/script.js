@@ -24,11 +24,9 @@ const totalInput5 = document.getElementsByClassName('total-input')[4];
 let screenHTML = document.querySelectorAll('.screen');
 const inputScreens = document.querySelector('.main-controls__input');
 
-//const cms = document.querySelector('.main-controls__views.cms');
 const checkCMS = document.querySelector('div.main-controls__views.cms input[type=checkbox]');
 let variantCMS = document.querySelector('.hidden-cms-variants');
 
-//const inputCMS = document.querySelectorAll('.main-controls__input')[8];
 const cmsSelect = document.querySelector('.hidden-cms-variants select');
 
 
@@ -50,7 +48,7 @@ const appData = {
     cms : [],
     percentCMS : 0,
 
-    init : function(){ // 
+    init : function(){  
         this.addTitle();
         const contextStart = appData.start.bind(appData);
         const contextBlock = appData.block.bind(appData);
@@ -213,7 +211,6 @@ const appData = {
     workWithCMS : function(){ // обработка массива и добавление значений
         for(let i = 0; i < this.cms.length; i++){
             if(this.cms[i].option === 'Другое'){
-                //console.log(appData.cms[i].option + ' ' + appData.cms[i].value);
                 const inputCMS = document.getElementsByClassName('main-controls__item hidden-cms-variants')[0].childNodes[3];
                 inputCMS.style.display = 'flex';
                 inputCMS.disabled = false;
@@ -235,7 +232,6 @@ const appData = {
     getRollback : function(){
         range.disabled = false;
         span.textContent = range.value + '%';
-        //this.rollback = +range.value;
         this.rollback = +range.value;
         const contextGetServiceWithRollback = appData.getServiceWithRollback.bind(appData);
         contextGetServiceWithRollback();
@@ -362,16 +358,11 @@ const appData = {
         buttonReset.style.display = 'none';
         const contextStart = appData.start.bind(appData);
         contextStart();
-        //appData.start();
     },
 };
 const contextInit = appData.init.bind(appData);
 contextInit();
 
-
-//const element = document.querySelector('.main-controls__views');
-//console.dir(screenHTML);
-//buttonStart.style.display = 'none';
 
 //console.log(title);//
 //console.log(plus);
