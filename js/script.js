@@ -50,13 +50,13 @@ const appData = {
 
     init : function(){  
         this.addTitle();
-        const contextStart = appData.start.bind(appData);
-        const contextBlock = appData.block.bind(appData);
-        const contextReset = appData.reset.bind(appData);
-        const contextAddScreenBlocks = appData.addScreenBlocks.bind(appData);
-        const contextGetRollback = appData.getRollback.bind(appData);
-        const contextCMS = appData.CMS.bind(appData);
-        const contextAddCMS = appData.addCMS.bind(appData);
+        const contextStart = this.start.bind(this);
+        const contextBlock = this.block.bind(this);
+        const contextReset = this.reset.bind(this);
+        const contextAddScreenBlocks = this.addScreenBlocks.bind(this);
+        const contextGetRollback = this.getRollback.bind(this);
+        const contextCMS = this.CMS.bind(this);
+        const contextAddCMS = this.addCMS.bind(this);
         buttonStart.addEventListener('click', contextStart);
         buttonReset.addEventListener('click', contextBlock);
         buttonReset.addEventListener('click', contextReset);
@@ -195,6 +195,7 @@ const appData = {
                 const select = option.querySelector('select');
                 select.disabled = false;
                 const input = option.querySelector('input');
+                input.disabled = false;
                 const selectLabel = select.options[select.selectedIndex].label;
                 this.cms.push(
                     {
@@ -213,7 +214,6 @@ const appData = {
             if(this.cms[i].option === 'Другое'){
                 const inputCMS = document.getElementsByClassName('main-controls__item hidden-cms-variants')[0].childNodes[3];
                 inputCMS.style.display = 'flex';
-                inputCMS.disabled = false;
                 console.log(inputCMS.childNodes[1].value);
                 this.percentCMS = +inputCMS.childNodes[1].value;
             }
@@ -247,23 +247,23 @@ const appData = {
     },
 
     start : function(){
-        const contextAddScreens = appData.addScreens.bind(appData);
+        const contextAddScreens = this.addScreens.bind(this);
         contextAddScreens();
-        const contextAddServices = appData.addServices.bind(appData);
+        const contextAddServices = this.addServices.bind(this);
         contextAddServices();
-        const contextGetRollback = appData.getRollback.bind(appData);
+        const contextGetRollback = this.getRollback.bind(this);
         contextGetRollback();
-        const contextCMS = appData.CMS.bind(appData);
+        const contextCMS = this.CMS.bind(this);
         contextCMS();
-        const contextAddPrices = appData.addPrices.bind(appData);
+        const contextAddPrices = this.addPrices.bind(this);
         contextAddPrices();
-        const contextBan = appData.ban.bind(appData);
+        const contextBan = this.ban.bind(this);
         if(contextBan() === 0){
             buttonStart.disabled = true;
             console.log('!!!');
-            const contextShowResult = appData.showResult.bind(appData);
+            const contextShowResult = this.showResult.bind(this);
             contextShowResult();
-            const contextBlock = appData.block.bind(appData);
+            const contextBlock = this.block.bind(this);
             contextBlock();
         }
         else{
@@ -275,6 +275,12 @@ const appData = {
     },
 
     deleteShowResult : function(){ // удаление 
+        for(let key in this.servicesNumber){
+            delete this.servicesNumber[key];
+        }
+        for(let key in this.servicesPercent){
+            delete this.servicesPercent[key];
+        }
         this.screenPrice = 0;
         this.rollback = 0;
         this.servicePricesPercent = 0;
@@ -344,24 +350,23 @@ const appData = {
     },
 
     reset : function(){
-        const contextDeleteCMS = appData.deleteCMS.bind(appData);
+        const contextDeleteCMS = this.deleteCMS.bind(this);
         contextDeleteCMS();
-        const contextDeleteRange = appData.deleteRange.bind(appData);
+        const contextDeleteRange = this.deleteRange.bind(this);
         contextDeleteRange();
-        const contextDeleteScreens = appData.deleteScreens.bind(appData);
+        const contextDeleteScreens = this.deleteScreens.bind(this);
         contextDeleteScreens();
-        const contextDeleteService = appData.deleteService.bind(appData);
+        const contextDeleteService = this.deleteService.bind(this);
         contextDeleteService();
-        const contextDeleteShowResult = appData.deleteShowResult.bind(appData);
+        const contextDeleteShowResult = this.deleteShowResult.bind(this);
         contextDeleteShowResult();
         buttonStart.style.display = 'block';
         buttonReset.style.display = 'none';
-        const contextStart = appData.start.bind(appData);
+        const contextStart = this.start.bind(this);
         contextStart();
     },
 };
-const contextInit = appData.init.bind(appData);
-contextInit();
+appData.init();
 
 
 //console.log(title);//
